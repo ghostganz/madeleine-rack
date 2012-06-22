@@ -4,4 +4,8 @@ require 'rack'
 require 'rack/lobster'
 
 use Madeleine::Middleware
-run Rack::Lobster.new
+
+#run Rack::Lobster.new
+
+require './sample'
+run Sample.new
