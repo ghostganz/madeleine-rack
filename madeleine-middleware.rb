@@ -5,10 +5,8 @@ class Madeleine::Middleware
   @@global_app = nil
 
   class Transaction
-    # TODO @app ska vara transient
 
     def initialize(app, env)
-      @app = app
       @@global_app = app # UGH!
       @env = env
     end
@@ -16,7 +14,19 @@ class Madeleine::Middleware
     def execute(system)
       env = @env.dup
       env['MADELEINE_SYSTEM'] = system
-      @app.call(env)
+      @@global_app.call(env)
+    end
+
+    def marshal_dump
+      result = @env.dup
+      # TODO need to replace these with marshalable things
+      result.delete 'rack.input'
+      result.delete 'rack.errors'
+      result
+    end
+
+    def marshal_load(obj)
+      @env = obj
     end
   end
 
@@ -28,7 +38,8 @@ class Madeleine::Middleware
   end
 
   def call(env)
-    Transaction.new(@app, env)
+    transaction = Transaction.new(@app, env)
+    @madeleine.execute_command(transaction)
     @app.call(env)
   end
 end

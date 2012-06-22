@@ -2,5 +2,13 @@
 
 * Bygg ut Madeleine så man i hela madeleinen kan skicka med extra context, som skickas med
   som argument till varje execute(system) ... typ execute(system, context)
+  Alltså: För att den ska finnas med även vid replay måste den skickas med när man skapar upp
+  hela madeleine-systemet.
 
 
+Saker att fixa i madeleine:
+
+* Verifiera, så man inte får den här vid laddning:
+  /Users/Anders/.rvm/gems/ruby-1.9.2-p290/gems/madeleine-0.7.3/lib/madeleine.rb:239:in `load': instance of Madeleine::Middleware::Transaction needs to have method `marshal_load' (TypeError)
+
+* Vid marshaling-fel så fick den nån EOF vid log replay, inte bra
