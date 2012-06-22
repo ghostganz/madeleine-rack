@@ -1,0 +1,6 @@
+
+
+* Bygg ut Madeleine så man i hela madeleinen kan skicka med extra context, som skickas med
+  som argument till varje execute(system) ... typ execute(system, context)
+
+
