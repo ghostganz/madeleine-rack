@@ -32,6 +32,10 @@ class Madeleine::Middleware
       result['rack.input'] = data
       # TODO:
       result.delete 'rack.errors'
+      result.delete "action_dispatch.routes"
+      result.delete "action_dispatch.logger"
+      result.delete "action_dispatch.backtrace_cleaner"
+
       result
     end
 
