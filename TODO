@@ -5,7 +5,8 @@
   Alltså: För att den ska finnas med även vid replay måste den skickas med när man skapar upp
   hela madeleine-systemet.
 
-* Konfar man bara upp Madeleine i config.ru så anropas den helt utan Rails-context, vilket är utmärkt.
+* Hur ska modellen få tag på systemet? Just nu behöver controllern skicka med det till modellen hela tiden.
+
 
 Saker att fixa i madeleine:
 
