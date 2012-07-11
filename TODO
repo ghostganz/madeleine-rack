@@ -5,6 +5,7 @@
   Alltså: För att den ska finnas med även vid replay måste den skickas med när man skapar upp
   hela madeleine-systemet.
 
+* Konfar man bara upp Madeleine i config.ru så anropas den helt utan Rails-context, vilket är utmärkt.
 
 Saker att fixa i madeleine:
 

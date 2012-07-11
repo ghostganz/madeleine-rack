@@ -32,9 +32,9 @@ class Madeleine::Middleware
       result['rack.input'] = data
       # TODO:
       result.delete 'rack.errors'
-      result.delete "action_dispatch.routes"
-      result.delete "action_dispatch.logger"
-      result.delete "action_dispatch.backtrace_cleaner"
+#      result.delete "action_dispatch.routes"
+#      result.delete "action_dispatch.logger"
+#      result.delete "action_dispatch.backtrace_cleaner"
 
       result
     end
@@ -53,6 +53,7 @@ class Madeleine::Middleware
   end
 
   def call(env)
+    p env
     transaction = Transaction.new(env)
     @madeleine.execute_command(transaction)
   end
