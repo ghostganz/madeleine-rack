@@ -2,7 +2,12 @@
 require 'madeleine'
 require 'stringio'
 
-class Madeleine::Middleware
+module Madeleine
+  module Rack
+  end
+end
+
+class Madeleine::Rack::Middleware
   def self.global_app
     @@global_app
   end
@@ -21,7 +26,7 @@ class Madeleine::Middleware
       puts "execute(#{system})"
       env = @env.dup
       Thread.current[:_madeleine_system] = system
-      Madeleine::Middleware.global_app.call(env)
+      Madeleine::Rack::Middleware.global_app.call(env)
     end
 
     def marshal_dump
@@ -42,7 +47,7 @@ class Madeleine::Middleware
   end
 
   def initialize(app)
-    Madeleine::Middleware.global_app = app
+    Madeleine::Rack::Middleware.global_app = app
     @madeleine = SnapshotMadeleine.new("some_storage") {
       Hash.new
     }
