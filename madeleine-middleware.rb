@@ -20,7 +20,7 @@ class Madeleine::Middleware
     def execute(system)
       puts "execute(#{system})"
       env = @env.dup
-      env['MADELEINE_SYSTEM'] = system
+      Thread.current[:_madeleine_system] = system
       Madeleine::Middleware.global_app.call(env)
     end
 

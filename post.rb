@@ -15,14 +15,14 @@ class Post
     @body = args['body'] if args['body']
   end
 
-  def self.all(system)
+  def self.all
+    system = Thread.current[:_madeleine_system]
     system['posts'] ||= []
     system['posts']
   end
 
-  def self.find(system, id_to_find)
-    system['posts'] ||= []
-    system['posts'].detect {|post| post.id == id_to_find.to_i}
+  def self.find(id_to_find)
+    self.all.detect {|post| post.id == id_to_find.to_i}
   end
 
   def self.model_name
@@ -38,7 +38,7 @@ class Post
   end
 
   def errors
-    # TODO should really be kept
+    # TODO should really be kept?
     ActiveModel::Errors.new(self)
   end
 
@@ -46,13 +46,12 @@ class Post
     @id > 0
   end
 
-  def save(system)
-    system['posts'] ||= []
-    @id = system['posts'].size + 1
-    system['posts'] << self
+  def save
+    @id = Post.all.size + 1
+    Post.all << self
   end
 
-  def destroy(system)
-    system['posts'].delete self
+  def destroy
+    Post.all.delete self
   end
 end
