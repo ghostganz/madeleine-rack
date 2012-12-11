@@ -3,6 +3,7 @@ PATH
   specs:
     madeleine-rack (0.0.1.pre)
       madeleine (= 0.8.0.pre)
+      rack (= 1.4.1)
 
 GEM
   remote: http://rubygems.org/

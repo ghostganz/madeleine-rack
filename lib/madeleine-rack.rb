@@ -1,0 +1,1 @@
+require 'madeleine/rack'

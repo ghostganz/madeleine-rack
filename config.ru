@@ -1,11 +1,7 @@
 
-require './madeleine-middleware'
-require 'rack'
-require 'rack/lobster'
+require 'madeleine-rack'
 
 use Madeleine::Rack::Middleware
-
-#run Rack::Lobster.new
 
 require './sample'
 run Sample.new
