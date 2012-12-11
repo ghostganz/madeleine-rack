@@ -20,8 +20,6 @@ describe Madeleine::Rack::LoggerProxy do
       @original_logger.should_receive(:error).with("error message").and_yield
       @original_logger.should_receive(:fatal).with("fatal message").and_yield
 
-      # TODO how test block?
-
       @logger.info("info message", &block)
       @logger.debug("debug message", &block)
       @logger.warn("warn message", &block)
