@@ -5,7 +5,7 @@ class Sample
 
   def call(env)
     puts "CALL"
-    system = env['MADELEINE_SYSTEM']
+    system = Thread.current[:_madeleine_system]
     req = Rack::Request.new(env)
     if req.get?
       puts "GET"

@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    madeleine-rack (0.0.1.pre)
+      madeleine (= 0.8.0.pre)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -35,6 +41,7 @@ GEM
     i18n (0.6.1)
     journey (1.0.4)
     json (1.7.5)
+    madeleine (0.8.0.pre)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -83,4 +90,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  madeleine-rack!
   rails
