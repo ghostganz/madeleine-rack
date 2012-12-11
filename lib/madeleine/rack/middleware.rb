@@ -46,9 +46,9 @@ class Madeleine::Rack::Middleware
     end
   end
 
-  def initialize(app)
+  def initialize(app, storage_directory)
     Madeleine::Rack::Middleware.global_app = app
-    @madeleine = SnapshotMadeleine.new("some_storage") {
+    @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory) {
       Hash.new
     }
   end

@@ -5,4 +5,10 @@
   And: Since it needs to be present at replay too, it has to be sent along when creating
   the whole madeleine system.
 
-* Pass system seed and filename in somewhere
+* Pass system seed in somewhere, or be fine with it always being a Hash?
+
+* Some nice integration with Rails for how/when to make snapshots?
+
+* Start writing tests
+
+* Handling Time?
