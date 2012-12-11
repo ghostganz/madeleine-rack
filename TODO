@@ -1,8 +1,8 @@
 
 
-* Bygg ut Madeleine så man i hela madeleinen kan skicka med extra context, som skickas med
-  som argument till varje execute(system) ... typ execute(system, context)
-  Alltså: För att den ska finnas med även vid replay måste den skickas med när man skapar upp
-  hela madeleine-systemet.
+* Expand Madeleine so that you can pass along an extra context, that's sent as argument
+  to every execute(system) ... e.g. execute(system, context)
+  And: Since it needs to be present at replay too, it has to be sent along when creating
+  the whole madeleine system.
 
 * Pass system seed and filename in somewhere
