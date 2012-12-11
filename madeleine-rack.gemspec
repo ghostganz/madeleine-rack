@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'madeleine', '0.8.0.pre'
   s.add_dependency 'rack', '1.4.1' # Need to be picky about version, since internal changes may break us
-  s.add_development_dependency 'rails'
+  #s.add_development_dependency 'rails'
+  s.add_development_dependency 'rspec'
 end

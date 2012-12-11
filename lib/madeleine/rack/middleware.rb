@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'madeleine'
 require 'stringio'
+require 'madeleine/rack/logger_proxy'
 
 module Madeleine
   module Rack
@@ -25,6 +26,9 @@ class Madeleine::Rack::Middleware
     def execute(system)
       puts "execute(#{system})"
       env = @env.dup
+
+      env['rack.logger'] = Madeleine::Rack::LoggerProxy.new(env['rack.logger'])
+
       Thread.current[:_madeleine_system] = system
       Madeleine::Rack::Middleware.global_app.call(env)
     end
