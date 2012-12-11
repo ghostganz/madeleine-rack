@@ -16,7 +16,7 @@ class Madeleine::Rack::Middleware
     @@global_app = app
   end
 
-  class Transaction
+  class LoggedRequest
 
     def initialize(env)
       @env = env
@@ -54,7 +54,7 @@ class Madeleine::Rack::Middleware
   end
 
   def call(env)
-    transaction = Transaction.new(env)
+    transaction = LoggedRequest.new(env)
     @madeleine.execute_command(transaction)
   end
 end
