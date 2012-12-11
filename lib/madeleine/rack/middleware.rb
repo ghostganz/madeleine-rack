@@ -40,6 +40,7 @@ class Madeleine::Rack::Middleware
       input.rewind
       result['rack.input'] = data
       result.delete 'rack.errors'
+      result.delete 'async.callback' # Used by Thin
       result
     end
 
