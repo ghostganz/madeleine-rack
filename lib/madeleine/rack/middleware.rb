@@ -2,6 +2,7 @@
 require 'madeleine'
 require 'stringio'
 require 'madeleine/rack/logger_proxy'
+require 'madeleine/rack/input_proxy'
 
 module Madeleine
   module Rack
@@ -20,25 +21,21 @@ class Madeleine::Rack::Middleware
   class LoggedRequest
 
     def initialize(env)
-      @env = env
+      @env = env.dup
+
+      @env['rack.logger'] = Madeleine::Rack::LoggerProxy.new(env['rack.logger'])
+      @env['rack.input'] = Madeleine::Rack::InputProxy.new(env['rack.input'])
     end
 
     def execute(system)
       puts "execute(#{system})"
-      env = @env.dup
-
-      env['rack.logger'] = Madeleine::Rack::LoggerProxy.new(env['rack.logger'])
 
       Thread.current[:_madeleine_system] = system
-      Madeleine::Rack::Middleware.global_app.call(env)
+      Madeleine::Rack::Middleware.global_app.call(@env)
     end
 
     def marshal_dump
       result = @env.dup
-      input = @env['rack.input']
-      data = input.read
-      input.rewind
-      result['rack.input'] = data
       result.delete 'rack.errors'
       result.delete 'async.callback' # Used by Thin
       result
@@ -46,7 +43,6 @@ class Madeleine::Rack::Middleware
 
     def marshal_load(obj)
       @env = obj
-      @env['rack.input'] = StringIO.new(obj['rack.input'])
       @env['rack.errors'] = StringIO.new
     end
   end

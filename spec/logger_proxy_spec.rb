@@ -1,5 +1,4 @@
 
-
 require 'madeleine/rack/logger_proxy'
 
 describe Madeleine::Rack::LoggerProxy do
