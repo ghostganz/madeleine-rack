@@ -49,7 +49,6 @@ describe Madeleine::Rack::InputProxy do
     end
   end
 
-  # TODO ensure original stream is rewinded after reading when doing marshal_dump
   context "when used during recovery" do
     before do
       @input = Marshal.load(Marshal.dump(@input))
@@ -66,6 +65,10 @@ describe Madeleine::Rack::InputProxy do
 
     it "is in binary mode" do
       @input.binmode?.should ==true
+    end
+
+    it "leaves the original input rewound after using it" do
+      @original_input.pos.should == 0
     end
   end
 end
