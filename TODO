@@ -12,3 +12,7 @@
 * Start writing tests
 
 * Handling Time?
+
+* Run GET, HEAD etc. as queries, without logging.
+
+* Cleaner solution for the Rack::Lock close() thing?
