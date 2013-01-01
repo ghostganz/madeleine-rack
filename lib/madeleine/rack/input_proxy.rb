@@ -1,6 +1,12 @@
+require 'madeleine/rack/env_proxy'
+
 module Madeleine
   module Rack
-    class InputProxy
+    class InputProxy < EnvProxy
+      def self.key
+        'rack.input'
+      end
+
       def initialize(input)
         @input = input
       end

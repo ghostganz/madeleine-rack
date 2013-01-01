@@ -1,6 +1,12 @@
+require 'madeleine/rack/env_proxy'
+
 module Madeleine
   module Rack
-    class LoggerProxy
+    class LoggerProxy < EnvProxy
+      def self.key
+        'rack.logger'
+      end
+
       def initialize(logger)
         @logger = logger
       end

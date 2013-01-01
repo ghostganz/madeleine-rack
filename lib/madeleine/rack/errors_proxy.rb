@@ -1,6 +1,12 @@
+require 'madeleine/rack/env_proxy'
+
 module Madeleine
   module Rack
-    class ErrorsProxy
+    class ErrorsProxy < EnvProxy
+      def self.key
+        'rack.errors'
+      end
+
       def initialize(errors)
         @errors = errors
       end

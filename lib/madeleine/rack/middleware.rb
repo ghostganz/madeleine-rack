@@ -21,15 +21,19 @@ module Madeleine
         def initialize(env)
           @env = env.dup
 
-          @env['rack.logger'] = Madeleine::Rack::LoggerProxy.new(env['rack.logger'])
-          @env['rack.input'] = Madeleine::Rack::InputProxy.new(env['rack.input'])
-          @env['rack.errors'] = Madeleine::Rack::ErrorsProxy.new(env['rack.errors'])
+          Madeleine::Rack::LoggerProxy.add(@env)
+          Madeleine::Rack::InputProxy.add(@env)
+          Madeleine::Rack::ErrorsProxy.add(@env)
         end
 
         def execute(system)
           puts "execute(#{system})"
 
+          # Put the system where we can find it from
+          # within a Rails controller etc.
           Thread.current[:_madeleine_system] = system
+
+          # Continue to the app
           result = Madeleine::Rack::Middleware.global_app.call(@env)
 
           # Some later middlewares, Rack::Lock in particular,

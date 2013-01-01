@@ -16,3 +16,5 @@
 * Run GET, HEAD etc. as queries, without logging.
 
 * Cleaner solution for the Rack::Lock close() thing?
+
+* Rakefile
