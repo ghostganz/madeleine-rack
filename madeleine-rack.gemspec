@@ -12,10 +12,11 @@ Gem::Specification.new do |s|
 
   s.author = "Anders Bengtsson"
   s.email = "ndrsbngtssn@yahoo.se"
+  s.summary = "Madeleine persistence for Rack based applications"
   s.homepage = "http://github.com/ghostganz/madeleine-rack"
 
   s.files = Dir.glob("lib/**/*.rb") +
-    ['README', 'COPYING']
+    ['README.md', 'COPYING']
 
   s.add_dependency 'madeleine', '0.8.0'
   s.add_dependency 'rack', '~> 1.4.1'
