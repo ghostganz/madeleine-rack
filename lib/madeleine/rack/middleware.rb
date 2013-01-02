@@ -34,16 +34,16 @@ module Madeleine
           Thread.current[:_madeleine_system] = system
 
           # Continue to the app
-          result = Madeleine::Rack::Middleware.global_app.call(@env)
+          status, headers, body = Madeleine::Rack::Middleware.global_app.call(@env)
 
           # Some later middlewares, Rack::Lock in particular,
           # do cleanup and release of locks on closure of the
           # input stream. We have to make sure that happens
           # during command replay too, when the web server
           # doesn't do it for us.
-          result[2].close if result[2].respond_to? :close
+          body.close if body.respond_to? :close
 
-          result
+          [status, headers, body]
         end
 
         def marshal_dump
