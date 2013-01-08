@@ -18,3 +18,5 @@
 * Minimize bytes written to log for each request
 
 * Update to current version of Rack spec
+
+* Investigate if Thin's async stuff can be supported
