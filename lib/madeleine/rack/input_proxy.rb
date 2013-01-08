@@ -1,8 +1,9 @@
 require 'madeleine/rack/env_proxy'
+require 'delegate'
 
 module Madeleine
   module Rack
-    class InputProxy
+    class InputProxy < Delegator
       extend EnvProxy
 
       def self.key
@@ -13,6 +14,10 @@ module Madeleine
         @input = input
       end
 
+      def __getobj__
+        @input
+      end
+
       def marshal_dump
         result = @input.read
         @input.rewind
@@ -21,26 +26,6 @@ module Madeleine
 
       def marshal_load(data)
         @input = StringIO.new(data)
-      end
-
-      def gets(*args)
-        @input.gets(*args)
-      end
-
-      def each(*args, &block)
-        @input.each(*args, &block)
-      end
-
-      def read(*args)
-        @input.read(*args)
-      end
-
-      def rewind
-        @input.rewind
-      end
-
-      def external_encoding
-        @input.external_encoding
       end
 
       def binmode?
