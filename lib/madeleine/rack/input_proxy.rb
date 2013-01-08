@@ -2,7 +2,9 @@ require 'madeleine/rack/env_proxy'
 
 module Madeleine
   module Rack
-    class InputProxy < EnvProxy
+    class InputProxy
+      extend EnvProxy
+
       def self.key
         'rack.input'
       end

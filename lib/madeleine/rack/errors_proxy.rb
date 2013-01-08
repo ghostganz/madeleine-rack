@@ -2,7 +2,9 @@ require 'madeleine/rack/env_proxy'
 
 module Madeleine
   module Rack
-    class ErrorsProxy < EnvProxy
+    class ErrorsProxy
+      extend EnvProxy
+
       def self.key
         'rack.errors'
       end

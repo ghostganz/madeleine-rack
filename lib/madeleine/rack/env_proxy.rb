@@ -1,11 +1,11 @@
 module Madeleine
   module Rack
-    class EnvProxy
-      def self.key
+    module EnvProxy
+      def key
         raise NotImplementedError
       end
 
-      def self.add(env)
+      def add(env)
         if env[key]
           env[key] = new(env[key])
         end
