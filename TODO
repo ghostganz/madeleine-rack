@@ -15,4 +15,3 @@
 
 * Run GET, HEAD etc. as queries, without logging.
 
-* Use Rack::Lint
