@@ -5,7 +5,7 @@
 requests to a web application, so that the application's state can later be
 automatically restored by re-playing the requests.
 
-It supports the basic Rack [specification](http://rack.rubyforge.org/doc/SPEC.html),
+It supports the basic Rack [specification](https://github.com/rack/rack/blob/master/SPEC),
 with a few work-arounds for specific web servers etc.
 
 ### Usage
