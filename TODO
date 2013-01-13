@@ -20,3 +20,6 @@
 * Update to current version of Rack spec
 
 * Investigate if Thin's async stuff can be supported
+
+* Don't assume env supports dup(), copy the env in a more
+  controlled way?
