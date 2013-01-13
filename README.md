@@ -1,12 +1,15 @@
 # madeleine-rack: Madeleine persistence for Rack-based applications
 
 **madeleine-rack** is a [Rack](http://rack.github.com/) middleware that uses
-[Madeleine](https://github.com/ghostganz/madeleine) to intercept and store
-requests to a web application, so that the application's state can later be
-automatically restored by re-playing the requests.
+[Madeleine](https://github.com/ghostganz/madeleine) to provide data persistence
+to web applications.
+
+It does this by intercepting and storing all web requests, so that the
+application's state can later be restored by automatically re-playing the
+requests.
 
 It supports the basic Rack [specification](https://github.com/rack/rack/blob/master/SPEC),
-with a few work-arounds for specific web servers etc.
+with a few work-arounds for specific web servers, etc.
 
 ### Usage
 
