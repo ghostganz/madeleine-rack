@@ -13,8 +13,6 @@
 
 * Handling Time?
 
-* Run GET, HEAD etc. as queries, without logging.
-
 * Minimize bytes written to log for each request
 
 * Update to current version of Rack spec
