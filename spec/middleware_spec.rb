@@ -8,7 +8,7 @@ describe Madeleine::Rack::Middleware do
     before do
       @app = stub('The Application')
       @madeleine = stub('The Madeleine')
-      Madeleine::SnapshotMadeleine.stub(:new).with('the_storage_dir').and_return(@madeleine)
+      Madeleine::SnapshotMadeleine.stub(:new).and_return(@madeleine)
       @middleware = Madeleine::Rack::Middleware.new(@app, 'the_storage_dir')
     end
 
@@ -45,6 +45,18 @@ describe Madeleine::Rack::Middleware do
     end
   end
 
-  # TODO test that it creates an empty system
+  context "Starting up" do
+
+    it "initializes the Madeleine with an empty hash as the system" do
+      app = stub('The Application')
+      Madeleine::SnapshotMadeleine.should_receive(:new) do |dir, &block|
+        dir.should == 'the_storage_dir'
+        block.yield.should == {}
+      end
+
+      Madeleine::Rack::Middleware.new(app, 'the_storage_dir')
+    end
+  end
+
   # TODO test that it would restore the system's state, if the Madeleine replays the commands
 end
