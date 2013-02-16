@@ -12,10 +12,18 @@ describe Madeleine::Rack::Middleware do
       @middleware = Madeleine::Rack::Middleware.new(@app, 'the_storage_dir')
     end
 
-    it "puts a command into Madeleine" do
+    it "puts a command into Madeleine for execution" do
       @madeleine.should_receive(:execute_command).once
 
       @middleware.call({})
+    end
+
+    context "When it's a GET or HEAD request" do
+      it "puts a command into Madeleine for querying" do
+        @madeleine.should_receive(:execute_query).once
+
+        @middleware.call({'REQUEST_METHOD' => 'GET'})
+      end
     end
 
     context "With a Madeleine that executes the command" do

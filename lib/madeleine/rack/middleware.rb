@@ -66,7 +66,20 @@ module Madeleine
 
       def call(env)
         transaction = LoggedRequest.new(env)
-        @madeleine.execute_command(transaction)
+
+        if read_only?(env)
+          @madeleine.execute_query(transaction)
+        else
+          @madeleine.execute_command(transaction)
+        end
+      end
+
+      private
+
+      READ_ONLY_METHODS = ['GET', 'HEAD', 'OPTIONS', 'TRACE']
+
+      def read_only?(env)
+        READ_ONLY_METHODS.include? env['REQUEST_METHOD']
       end
     end
   end
