@@ -2,14 +2,14 @@ PATH
   remote: .
   specs:
     madeleine-rack (0.0.1.pre)
-      madeleine (= 0.8.0)
+      madeleine (= 0.9.0.pre)
       rack (>= 1.4)
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
-    madeleine (0.8.0)
+    madeleine (0.9.0.pre)
     rack (1.5.2)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)

@@ -8,13 +8,6 @@ require 'madeleine/rack/errors_proxy'
 module Madeleine
   module Rack
     class Middleware
-      def self.global_app
-        @@global_app
-      end
-
-      def self.global_app=(app)
-        @@global_app = app
-      end
 
       class LoggedRequest
 
@@ -26,15 +19,15 @@ module Madeleine
           Madeleine::Rack::ErrorsProxy.add(@env)
         end
 
-        def execute(system)
-          puts "execute(#{system})"
+        def execute(system, app)
+          puts "execute(#{system}, #{app})"
 
           # Put the system where we can find it from
           # within a Rails controller etc.
           Thread.current[:_madeleine_system] = system
 
           # Continue to the app
-          status, headers, body = Madeleine::Rack::Middleware.global_app.call(@env)
+          status, headers, body = app.call(@env)
 
           # Some later middlewares, Rack::Lock in particular,
           # do cleanup and release of locks on closure of the
@@ -58,9 +51,8 @@ module Madeleine
       end
 
       def initialize(app, storage_directory, &system_seed_block)
-        Madeleine::Rack::Middleware.global_app = app
         system_seed_block ||= lambda { Hash.new }
-        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory, &system_seed_block)
+        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory, execution_context: app, &system_seed_block)
       end
 
       def call(env)

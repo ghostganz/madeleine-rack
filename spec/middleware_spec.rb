@@ -30,7 +30,7 @@ describe Madeleine::Rack::Middleware do
       before do
         @system = {'foo' => 'bar'}
         @madeleine.stub(:execute_command) {|command|
-          command.execute(@system)
+          command.execute(@system, @app)
         }
       end
 
