@@ -57,11 +57,10 @@ module Madeleine
         end
       end
 
-      def initialize(app, storage_directory)
+      def initialize(app, storage_directory, &system_seed_block)
         Madeleine::Rack::Middleware.global_app = app
-        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory) {
-          Hash.new
-        }
+        system_seed_block ||= lambda { Hash.new }
+        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory, &system_seed_block)
       end
 
       def call(env)
