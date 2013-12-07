@@ -3,7 +3,7 @@ require 'madeleine/rack/logger_proxy'
 
 describe Madeleine::Rack::LoggerProxy do
   before do
-    @original_logger = stub
+    @original_logger = double
     @original_logger.stub(:marshal_dump).and_raise("Don't attempt to marshal the logger!")
     @logger = Madeleine::Rack::LoggerProxy.new(@original_logger)
   end

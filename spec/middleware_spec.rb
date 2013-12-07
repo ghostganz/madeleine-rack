@@ -6,8 +6,8 @@ describe Madeleine::Rack::Middleware do
 
   context "Executing a request" do
     before do
-      @app = stub('The Application')
-      @madeleine = stub('The Madeleine')
+      @app = double('The Application')
+      @madeleine = double('The Madeleine')
       Madeleine::SnapshotMadeleine.stub(:new).and_return(@madeleine)
       @middleware = Madeleine::Rack::Middleware.new(@app, 'the_storage_dir')
     end
@@ -56,7 +56,7 @@ describe Madeleine::Rack::Middleware do
   context "Starting up" do
 
     it "initializes the Madeleine with an empty hash as the system" do
-      app = stub('The Application')
+      app = double('The Application')
       Madeleine::SnapshotMadeleine.should_receive(:new) do |dir, &block|
         dir.should == 'the_storage_dir'
         block.yield.should == {}
