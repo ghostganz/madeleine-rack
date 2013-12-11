@@ -5,7 +5,7 @@ module Madeleine
         raise NotImplementedError
       end
 
-      def add(env)
+      def add_proxy(env)
         if env[key]
           env[key] = new(env[key])
         end

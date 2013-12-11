@@ -14,9 +14,9 @@ module Madeleine
         def initialize(env)
           @env = env.dup
 
-          Madeleine::Rack::LoggerProxy.add(@env)
-          Madeleine::Rack::InputProxy.add(@env)
-          Madeleine::Rack::ErrorsProxy.add(@env)
+          Madeleine::Rack::LoggerProxy.add_proxy(@env)
+          Madeleine::Rack::InputProxy.add_proxy(@env)
+          Madeleine::Rack::ErrorsProxy.add_proxy(@env)
         end
 
         def execute(system, app)
