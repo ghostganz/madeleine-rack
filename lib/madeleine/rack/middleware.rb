@@ -12,7 +12,10 @@ module Madeleine
       class LoggedRequest
 
         def initialize(env)
-          @env = env.dup
+          @env = {}
+          env.each_pair do |key, value|
+            @env[key] = value unless key == 'async.callback' # Used by Thin
+          end
 
           Madeleine::Rack::LoggerProxy.add_proxy(@env)
           Madeleine::Rack::InputProxy.add_proxy(@env)
@@ -40,9 +43,7 @@ module Madeleine
         end
 
         def marshal_dump
-          result = @env.dup
-          result.delete 'async.callback' # Used by Thin
-          result
+          @env
         end
 
         def marshal_load(obj)
