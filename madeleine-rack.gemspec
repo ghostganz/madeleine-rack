@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir.glob("lib/**/*.rb") +
     ['README.md', 'COPYING']
 
-  s.add_dependency 'madeleine', '~> 0.9.0'
+  s.add_dependency 'madeleine', '~> 0.10.0.pre'
   s.add_dependency 'rack', '>= 1.4'
 
   s.add_development_dependency 'rspec'

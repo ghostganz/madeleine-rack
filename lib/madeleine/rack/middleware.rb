@@ -22,12 +22,14 @@ module Madeleine
           Madeleine::Rack::ErrorsProxy.add_proxy(@env)
         end
 
-        def execute(system, app)
-          puts "execute(#{system}, #{app})"
+        def execute(system, context)
+          puts "execute(#{system}, #{context})"
+
+          app = context[:app]
 
           # Put the system where we can find it from
           # within a Rails controller etc.
-          env = @env.merge({'madeleine.system' => system})
+          env = @env.merge({'madeleine.system' => system, 'madeleine.madeleine' => context[:madeleine]})
 
           # Continue to the app
           status, headers, body = app.call(env)
@@ -53,7 +55,9 @@ module Madeleine
 
       def initialize(app, storage_directory, &system_seed_block)
         system_seed_block ||= lambda { Hash.new }
-        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory, execution_context: app, &system_seed_block)
+        context = {app: app}
+        @madeleine = Madeleine::SnapshotMadeleine.new(storage_directory, execution_context: context, &system_seed_block)
+        context[:madeleine] = @madeleine
       end
 
       def call(env)

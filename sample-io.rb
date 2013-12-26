@@ -2,26 +2,55 @@
 
 require 'rack'
 require 'net/http'
-require 'queue'
 
 class IoService
   def initialize
     @queue = Queue.new
   end
 
-  def enqueue(url, id)
-    @queue << [url, id]
+  def enqueue(url, id, madeleine)
+    return if madeleine.in_recovery? # Protected from race cond. only by being called from within a command, so be careful.
+    @queue << [url, id, madeleine]
   end
 
   def work
-    url, id = @queue.pop
-    html = Net::HTTP.get(uri)
+    url, id, madeleine = @queue.pop
 
-    # TODO send update to mad.
+    puts "Fetching url: #{url}"
+    html = Net::HTTP.get(url)
+
+    puts "Executing with #{html.size} bytes of html"
+    madeleine.execute_command(IoUpdate.new(id, html))
   end
 end
 
+# TODO combine update/callback?
 
+class IoUpdate
+  def initialize(id, html)
+    @id, @html = id, html
+  end
+
+  def execute(system, context)
+    puts "In execute..."
+    callback = system[:pending_io].delete(@id)
+    puts "Calling callback: #{callback}"
+    callback.call(@html, system)
+  end
+end
+
+class IoCallback
+
+  def call(html, system)
+    puts "Got html: #{html.size} bytes"
+    if html =~ /\<title\>(.*)\<\/title\>/m
+      puts "Got a title"
+      system[:title] = $1
+    end
+  end
+end
+
+# TODO set up IoService from another middleware? (but want it stand-alone too)
 
 class SampleIO
   def initialize
@@ -35,7 +64,7 @@ class SampleIO
 
   def call(env)
     logger = env['rack.logger']
-    system = Thread.current[:_madeleine_system]
+    system = env['madeleine.system']
 
     req = Rack::Request.new(env)
     if req.get?
@@ -49,17 +78,11 @@ class SampleIO
       url_param = req.POST['url']
       uri = URI(url_param)
 
+      system[:pending_io] ||= {}
+      id = 'the-id' # TODO
+      system[:pending_io][id] = IoCallback.new
 
-      # Ha en generell IO-mojäng som kör saker async, och ha all logik i ett objekt som instansieras
-      # och registreras härifrån?...
-
-      # TODO this is the stuff that needs to run on outside
-      html = Net::HTTP.get(uri)
-
-      # TODO this is the stuff that needs to run on callback
-      if html =~ /\<title\>(.*)\<\/title\>/m
-        system[:title] = $1
-      end
+      @io_service.enqueue(uri, id, env['madeleine.madeleine'])
 
       [302, {'Location' => '/', 'Content-Type' => 'text/plain'}, ['redirect']]
     else
