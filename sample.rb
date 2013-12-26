@@ -6,7 +6,7 @@ class Sample
   def call(env)
     logger = env['rack.logger']
     logger.info("CALL") if logger
-    system = Thread.current[:_madeleine_system]
+    system = env['madeleine.system']
     req = Rack::Request.new(env)
     if req.get?
       logger.info("GET") if logger

@@ -37,15 +37,15 @@ describe Madeleine::Rack::Middleware do
       it "calls the app with the env" do
         env = {'some_env_param' => 'some_env_value'}
         @app.should_receive(:call) {|an_env|
-          an_env.should == env
+          an_env.should include(env)
         }
 
         @middleware.call(env)
       end
 
-      it "passes the persistent system to the app" do
-        @app.should_receive(:call) {|_|
-          Thread.current[:_madeleine_system].should == @system
+      it "passes the persistent system to the app as part of the env" do
+        @app.should_receive(:call) {|env|
+          env['madeleine.system'].should == @system
         }
 
         @middleware.call({})

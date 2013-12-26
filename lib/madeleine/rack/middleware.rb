@@ -27,10 +27,10 @@ module Madeleine
 
           # Put the system where we can find it from
           # within a Rails controller etc.
-          Thread.current[:_madeleine_system] = system
+          env = @env.merge({'madeleine.system' => system})
 
           # Continue to the app
-          status, headers, body = app.call(@env)
+          status, headers, body = app.call(env)
 
           # Some later middlewares, Rack::Lock in particular,
           # do cleanup and release of locks on closure of the
